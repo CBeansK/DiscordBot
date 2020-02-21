@@ -1,0 +1,32 @@
+
+plugins {
+
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '4.0.4'
+}
+
+mainClassName = 'com.bot.Bot'
+repositories {
+
+    jcenter()
+}
+
+dependencies {
+    // This dependency is used by the application.
+    implementation 'com.google.guava:guava:28.0-jre'
+    implementation group: 'org.menudocs', name: 'paste-client-java', version: '1.0.16'
+
+    compile group: 'net.dv8tion', name: 'JDA', version: '4.1.1_108'
+    compile group: 'com.jagrosh', name: 'jda-utilities', version: '3.0.1'
+    compile group: 'me.duncte123', name: 'botCommons', version: '1.0.45'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+    compile 'io.github.cdimascio:java-dotenv:5.1.1'
+
+
+
+    // Use JUnit test framework
+    testImplementation 'junit:junit:4.12'
+}
+
+compileJava.options.encoding = 'UTF-8'
