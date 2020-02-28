@@ -19,6 +19,8 @@ public class CommandManager {
         addCommand(new KickCommand());
         addCommand(new PasteCommand());
         addCommand(new RouletteCommand());
+        addCommand(new MoleCommand());
+        addCommand(new TbowCommand());
     }
 
     private void addCommand(ICommand cmd) {

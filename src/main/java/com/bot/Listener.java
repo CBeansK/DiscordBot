@@ -1,12 +1,10 @@
 package com.bot;
 
 import com.bot.command.CommandManager;
-import com.bot.command.commands.RouletteCommand;
 import me.duncte123.botcommons.BotCommons;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +26,11 @@ public class Listener extends ListenerAdapter {
         User user = event.getAuthor();
         String prefix = Config.get("prefix");
         String raw = event.getMessage().getContentRaw();
+        String channel = event.getChannel().getId();
+
+        if (!channel.equals(Config.get("CHANNEL_ID"))){
+            return;
+        }
 
         if (user.isBot() || event.isWebhookMessage()){
             return;
