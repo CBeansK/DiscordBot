@@ -27,8 +27,6 @@ public class RouletteCommand implements ICommand {
             return;
         }
 
-
-
         final String difficulty = args.get(0).toLowerCase();
 
         // Check permissions

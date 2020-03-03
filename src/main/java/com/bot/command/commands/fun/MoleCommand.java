@@ -5,27 +5,29 @@ import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.util.Random;
 
-public class TbowCommand implements ICommand {
+public class MoleCommand implements ICommand {
+
     @Override
     public void handle(CommandContext ctx) {
-        final TextChannel channel = ctx.getChannel();
-        Random random = new Random();
 
-        int rand = random.nextInt(1800);
-        if (rand < 1){
-            channel.sendMessage("You got tbow! Congratulations!").queue();
-        }else{
-            channel.sendMessage("You didn't get tbow, sucks to suck").queue();
-        }
+        final TextChannel channel = ctx.getChannel();
+
+        Random random = new Random();
+        int baccus = (random.nextInt(5) + 5) * 5;
+        int weed = 100 - baccus;
+
+        channel.sendMessage(String.format("Baccus: %1$s     Weed: %2$s", baccus, weed)).queue();
+
     }
 
     @Override
     public String getName() {
-        return "tbow";
+        return "mole";
     }
 
     @Override
     public String getHelp() {
-        return null;
+        return "Provides a ratio of tobacco to weed to use in your moles\n"+
+                "Usage: !!mole";
     }
 }
