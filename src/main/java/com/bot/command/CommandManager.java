@@ -2,6 +2,10 @@ package com.bot.command;
 
 import com.bot.Config;
 import com.bot.command.commands.*;
+import com.bot.command.commands.fun.MoleCommand;
+import com.bot.command.commands.fun.RouletteCommand;
+import com.bot.command.commands.fun.TbowCommand;
+import com.bot.command.commands.music.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import javax.annotation.Nullable;
@@ -14,13 +18,30 @@ public class CommandManager {
     private final List<ICommand> commands = new ArrayList<>();
 
     public CommandManager() {
+
+        // Basic commands
         addCommand(new PingCommand());
         addCommand(new HelpCommand(this));
-        addCommand(new KickCommand());
         addCommand(new PasteCommand());
+
+        // Admin
+        addCommand(new KickCommand());
+
+        // Games
         addCommand(new RouletteCommand());
         addCommand(new MoleCommand());
         addCommand(new TbowCommand());
+
+        // VC Controls
+        addCommand(new JoinCommand());
+        addCommand(new LeaveCommand());
+
+        // Music
+        addCommand(new PlayCommand());
+        addCommand(new PauseCommand());
+        addCommand(new ResumeCommand());
+        addCommand(new SkipCommand());
+        addCommand(new VolumeCommand());
     }
 
     private void addCommand(ICommand cmd) {

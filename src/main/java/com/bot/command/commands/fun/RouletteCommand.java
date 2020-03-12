@@ -1,6 +1,7 @@
-package com.bot.command.commands;
+package com.bot.command.commands.fun;
 
 import com.bot.command.CommandContext;
+import com.bot.command.commands.ICommand;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;

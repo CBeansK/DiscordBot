@@ -1,10 +1,10 @@
-package com.bot.command.commands;
+package com.bot.command.commands.fun;
 
 import com.bot.command.CommandContext;
+import com.bot.command.commands.ICommand;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 
-import java.lang.reflect.Member;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
