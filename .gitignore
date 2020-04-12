@@ -6,3 +6,8 @@ src/main/resources/.env/
 build/
 out/
 
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

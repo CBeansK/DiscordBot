@@ -4,4 +4,5 @@
 package com.bot;
 
 public class AppTest {
+    //TODO: make some feckin tests ya nerd
 }

@@ -62,6 +62,8 @@ public class TbowCommand implements ICommand {
 
     @Override
     public String getHelp() {
-        return null;
+        return "Makes a roll to see if you get a twisted bow.\n"
+                +"Usage: !!tbow [args]\n"
+                +"Arguments: 'attempts' 'got'";
     }
 }

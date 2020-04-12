@@ -26,6 +26,7 @@ public class CommandManager {
 
         // Admin
         addCommand(new KickCommand());
+        addCommand(new MuteCommand());
 
         // Games
         addCommand(new RouletteCommand());

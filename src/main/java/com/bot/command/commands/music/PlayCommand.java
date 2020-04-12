@@ -9,7 +9,7 @@ public class PlayCommand implements ICommand {
     public void handle(CommandContext ctx) {
         PlayerManager manager = PlayerManager.getInstance();
 
-        manager.loadAndPlay(ctx.getChannel(), ctx.getArgs().get(0));
+        manager.loadAndPlay(ctx.getChannel(), ctx.getArgs());
 
         manager.getGuildMusicManager(ctx.getGuild()).player.setVolume(Integer.parseInt(Config.get("volume")));
     }

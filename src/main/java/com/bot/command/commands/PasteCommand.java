@@ -26,6 +26,8 @@ public class PasteCommand implements ICommand {
             return;
         }
         System.out.println("paste received");
+
+        // 
         final String language = args.get(0);
         final String contentRaw = ctx.getMessage().getContentRaw();
         final int index = contentRaw.indexOf(language) + language.length();
@@ -34,6 +36,7 @@ public class PasteCommand implements ICommand {
         System.out.println(language);
         System.out.println(body);
 
+        //paste formatting
         client.createPaste(language, body).async(
                 (id) -> client.getPaste(id).async(paste -> {
                     EmbedBuilder builder = new EmbedBuilder()

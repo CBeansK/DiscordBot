@@ -1,0 +1,17 @@
+{
+  "AWSEBDockerrunVersion": "1",
+  "Authentication" : {
+  "Bucket": "discord-bot-dev",
+  "Key": ".dockercfg.json"
+},
+"Image": {
+  "Name": "cbeansk/watson",
+  "Update": "true"
+},
+  "Ports" : [
+    {
+      "ContainerPort": 8080
+    }
+  ],
+  "Logging": "/var/log"
+}
