@@ -1,9 +1,11 @@
 package com.bot;
 
 import com.bot.command.CommandManager;
+import com.bot.command.commands.game.XPSystem;
 import me.duncte123.botcommons.BotCommons;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.ReadyEvent;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.slf4j.Logger;
@@ -15,6 +17,7 @@ public class Listener extends ListenerAdapter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
     private final CommandManager manager = new CommandManager();
+    private final XPSystem xpSystem = new XPSystem();
 
     @Override
     public void onReady(@Nonnull ReadyEvent event) {
@@ -47,6 +50,18 @@ public class Listener extends ListenerAdapter {
 
         if (raw.startsWith(prefix)){
             manager.handle(event);
+        }
+    }
+
+    // Called whenever a user enters a voice channel
+    @Override
+    public void onGuildVoiceJoin(@Nonnull GuildVoiceJoinEvent event){
+        if (xpSystem.canGetXp(event.getMember())){
+            LOGGER.info(event.getMember().getNickname() + "is now gaining xp.");
+            xpSystem.startTimer(event.getMember());
+
+            // Testing
+            LOGGER.info("" + xpSystem.getPlayerXp(event.getMember()));
         }
     }
 }
