@@ -9,6 +9,10 @@ import org.menudocs.paste.PasteHost;
 
 import java.util.List;
 
+/*
+*   @class PasteCommand
+*   Creates a custom pastebin of whatever the author inputs
+ */
 public class PasteCommand implements ICommand {
     private final PasteClient client = new PasteClientBuilder()
             .setUserAgent("Bean Discord Bot")

@@ -32,10 +32,11 @@ public class HelpCommand implements ICommand {
             channel.sendMessage(builder.toString()).queue();
             return;
         }
-        // Handle invalid commands
+
         else{
             ICommand cmd = manager.getCommand(args.get(0));
 
+            // Handle invalid commands
             if (cmd == null){
                 channel.sendMessage("Not a valid command.").queue();
             } else {

@@ -13,17 +13,28 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 
+/*
+*   @class Listener
+*   Contains handler functions for events such as:
+*   Startup, Messages, Guild join, and VC join
+ */
 public class Listener extends ListenerAdapter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
     private final CommandManager manager = new CommandManager();
     private final XPSystem xpSystem = new XPSystem();
 
+    // Called on startup when the Bot is ready to receive commands
     @Override
     public void onReady(@Nonnull ReadyEvent event) {
         LOGGER.info("{} is ready", event.getJDA().getSelfUser().getAsTag());
     }
 
+    /*
+    *   This handles all messages received in the specified or default text channel.
+    *   If the messages have the set prefix, they will be interpreted as commands and
+    *   handled in CommandManager.
+     */
     @Override
     public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
         User user = event.getAuthor();
@@ -31,14 +42,17 @@ public class Listener extends ListenerAdapter {
         String raw = event.getMessage().getContentRaw();
         String channel = event.getChannel().getId();
 
+        // Validate set channel id
         if (!channel.equals(Config.get("CHANNEL_ID"))){
             return;
         }
 
+        // Prevent webhooks from triggering a command more than once
         if (user.isBot() || event.isWebhookMessage()){
             return;
         }
 
+        // Shutdown command
         if (raw.equalsIgnoreCase(prefix + "shutdown")
                 && user.getId().equals(Config.get("owner_id"))){
             LOGGER.info("Shutting down");
@@ -48,12 +62,16 @@ public class Listener extends ListenerAdapter {
             return;
         }
 
+        // Handle command
         if (raw.startsWith(prefix)){
             manager.handle(event);
         }
     }
 
-    // Called whenever a user enters a voice channel
+    /*
+    *   Whenever a user joins a voice channel, they will start accumulating xp.
+    *   This function checks whether the user can earn xp, then starts their timer in XpSystem
+     */
     @Override
     public void onGuildVoiceJoin(@Nonnull GuildVoiceJoinEvent event){
         if (xpSystem.canGetXp(event.getMember())){

@@ -8,15 +8,19 @@ import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.util.List;
 
+/*
+*   @class KickCommand
+*   Kicks a member from the guild if the author and bot have permissions
+ */
 public class KickCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
-        System.out.println("command received");
         final TextChannel channel = ctx.getChannel();
         final Message message = ctx.getMessage();
         final Member member = ctx.getMember();
         final List<String> args = ctx.getArgs();
 
+        // need to make sure we have someone to kick
         if (args.size() < 2 || message.getMentionedMembers().isEmpty()){
             channel.sendMessage("Missing arguments").queue();
             return;
@@ -24,6 +28,7 @@ public class KickCommand implements ICommand {
 
         final Member target = message.getMentionedMembers().get(0);
 
+        // Checking permissions for author
         if (!member.canInteract(target) || !member.hasPermission(Permission.KICK_MEMBERS)){
             channel.sendMessage("You don't have permission to kick this person").queue();
             return;
@@ -31,11 +36,13 @@ public class KickCommand implements ICommand {
 
         final Member selfMember = ctx.getSelfMember();
 
+        // Checking permissions for bot
         if (!selfMember.canInteract(target) || !selfMember.hasPermission(Permission.KICK_MEMBERS)){
             channel.sendMessage("I am missing the permissions to kick people :(").queue();
             return;
         }
 
+        // Optional reason for kick
         final String reason = String.join(" ", args.subList(1, args.size()));
 
         ctx.getGuild()

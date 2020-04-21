@@ -12,6 +12,10 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/*
+*   @class MuteCommand
+*   Command to temporarily mute a member. Can only be called if the author and bot have permissions
+ */
 public class MuteCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
