@@ -6,6 +6,11 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.util.List;
 
+/*
+*   @class CommandContext
+*   The CommandContext contains information about the command that is being handled,
+*   such as: arguments, guild, and the actual OnMessageReceivedEvent
+ */
 public class CommandContext implements ICommandContext {
     private final GuildMessageReceivedEvent event;
     private final List<String> args;

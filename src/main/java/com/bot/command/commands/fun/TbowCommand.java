@@ -8,9 +8,15 @@ import net.dv8tion.jda.api.entities.User;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-
+/*
+*   @class TbowCommand
+*   Command to roll the odds of a twisted bow from Runescape.
+*   Currently, user data such as total attempts and total successes are stored in memory
+*   A database needs to be implemented with user data for persistence
+ */
 public class TbowCommand implements ICommand {
 
+    // Hash maps to store data in memory
     private HashMap<User, Integer> tbowAttempts = new HashMap<>();
     private HashMap<User, Integer> tbowsReceived = new HashMap<>();
 

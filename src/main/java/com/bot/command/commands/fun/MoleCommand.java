@@ -5,7 +5,10 @@ import com.bot.command.commands.ICommand;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.util.Random;
-
+/*
+*   @class MoleCommand
+*   Provides a ratio of flower to tobacco for your sweet moles
+ */
 public class MoleCommand implements ICommand {
 
     @Override
@@ -17,7 +20,7 @@ public class MoleCommand implements ICommand {
         int baccus = (random.nextInt(5) + 5) * 5;
         int weed = 100 - baccus;
 
-        channel.sendMessage(String.format("Baccus: %1$s     Weed: %2$s", baccus, weed)).queue();
+        channel.sendMessage(String.format("Baccus: %1$s     Bud: %2$s", baccus, weed)).queue();
 
     }
 
@@ -28,7 +31,7 @@ public class MoleCommand implements ICommand {
 
     @Override
     public String getHelp() {
-        return "Provides a ratio of tobacco to weed to use in your moles\n"+
+        return "Provides a ratio of tobacco to flower to use in your moles\n"+
                 "Usage: !!mole";
     }
 }

@@ -2,6 +2,12 @@ package com.bot;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
+/*
+*   @class Config
+*   Basic config class for retrieving environment variables.
+*   There are two different ways, one retrieves from a .env file in project directory
+*   The other uses system variables for when we build into a docker container.
+ */
 public class Config {
 
 

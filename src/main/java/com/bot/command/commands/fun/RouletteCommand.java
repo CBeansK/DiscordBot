@@ -12,6 +12,18 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/*
+*   @class RouletteCommand
+*   Russian Roulette game with multiple levels of difficulty
+*   Easy: Loser is muted
+*   Medium: Loser is kicked from the guild
+*   Hard: Loser is BANNED from the guild
+*
+*   Potential improvements:
+*   Balance
+*   Temp mute on easy
+*   multiple players at once in an elimination mode?
+ */
 public class RouletteCommand implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
@@ -47,6 +59,7 @@ public class RouletteCommand implements ICommand {
 
     }
 
+    // Counts down from the time the command was received to the time of punishment
     class Countdown extends TimerTask{
 
         private String difficulty;
@@ -74,6 +87,8 @@ public class RouletteCommand implements ICommand {
             this.channel.sendMessage(doRoulette(this.author, this.difficulty, this.guild)).queue();
         }
     }
+
+    // Handles the game logic i.e. the roll and difficulty, as well as punishment
     private String doRoulette(Member author, String difficulty, Guild guild) {
 
         // Change this if you want roulette to be more less likely to succeed
