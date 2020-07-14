@@ -5,7 +5,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 import org.menudocs.paste.PasteClient;
 import org.menudocs.paste.PasteClientBuilder;
-import org.menudocs.paste.PasteHost;
 
 import java.util.List;
 
@@ -17,7 +16,6 @@ public class PasteCommand implements ICommand {
     private final PasteClient client = new PasteClientBuilder()
             .setUserAgent("Bean Discord Bot")
             .setDefaultExpiry("10m")
-            .setPasteHost(PasteHost.MENUDOCS) // Optional
             .build();
 
     @Override

@@ -9,7 +9,7 @@ import java.util.List;
 /*
 *   @class CommandContext
 *   The CommandContext contains information about the command that is being handled,
-*   such as: arguments, guild, and the actual OnMessageReceivedEvent
+*   such as: arguments, guild, and the event context
  */
 public class CommandContext implements ICommandContext {
     private final GuildMessageReceivedEvent event;

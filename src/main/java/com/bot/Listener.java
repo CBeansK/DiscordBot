@@ -1,8 +1,9 @@
 package com.bot;
 
 import com.bot.command.CommandManager;
-import com.bot.command.commands.game.XPSystem;
+import com.bot.command.commands.game.XPManager;
 import me.duncte123.botcommons.BotCommons;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
@@ -22,7 +23,7 @@ public class Listener extends ListenerAdapter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
     private final CommandManager manager = new CommandManager();
-    private final XPSystem xpSystem = new XPSystem();
+    private final XPManager xpSystem = new XPManager(1);
 
     // Called on startup when the Bot is ready to receive commands
     @Override
@@ -43,9 +44,9 @@ public class Listener extends ListenerAdapter {
         String channel = event.getChannel().getId();
 
         // Validate set channel id
-        if (!channel.equals(Config.get("CHANNEL_ID"))){
-            return;
-        }
+        //if (!channel.equals(Config.get("CHANNEL_ID"))){
+        //    return;
+        //}
 
         // Prevent webhooks from triggering a command more than once
         if (user.isBot() || event.isWebhookMessage()){
@@ -74,12 +75,21 @@ public class Listener extends ListenerAdapter {
      */
     @Override
     public void onGuildVoiceJoin(@Nonnull GuildVoiceJoinEvent event){
-        if (xpSystem.canGetXp(event.getMember())){
-            LOGGER.info(event.getMember().getNickname() + "is now gaining xp.");
-            xpSystem.startTimer(event.getMember());
+        Member member = event.getMember();
+
+        if (xpSystem.canGetXp(member)){
+
+            // Make sure new players are added
+            if (xpSystem.newPlayer(member)){
+                xpSystem.initializePlayer(member);
+            }
+
+            // start xp gains
+            LOGGER.info(member.getEffectiveName() + " is now gaining xp.");
+            xpSystem.startTimer(member);
 
             // Testing
-            LOGGER.info("" + xpSystem.getPlayerXp(event.getMember()));
+            LOGGER.info("" + xpSystem.getPlayerXp(member));
         }
     }
 }
