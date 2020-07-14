@@ -20,7 +20,7 @@ public class MoleCommand implements ICommand {
         int baccus = (random.nextInt(5) + 5) * 5;
         int weed = 100 - baccus;
 
-        channel.sendMessage(String.format("Baccus: %1$s     Bud: %2$s", baccus, weed)).queue();
+        channel.sendMessageFormat("Baccus: %1$s     Bud: %2$s", baccus, weed).queue();
 
     }
 

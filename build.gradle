@@ -9,6 +9,7 @@ plugins {
 // mainClassName = 'com.bot.Bot'
 repositories {
     jcenter()
+    mavenCentral()
 }
 
 
@@ -19,7 +20,8 @@ dependencies {
     implementation group: 'org.menudocs', name: 'paste-client-java', version: '1.0.21'
 
     // Music bot
-    implementation 'com.sedmelluq:lavaplayer:1.3.46'
+    implementation 'com.sedmelluq:lavaplayer:1.3.47'
+
 
     // Youtube
     implementation 'com.google.apis:google-api-services-youtube:v3-rev222-1.25.0'

@@ -23,8 +23,7 @@ public class CommandManager {
 
     /*
     *   Constructor builds list of all commands.
-    *   Any new commands should be added here so the bot knows they exist
-    *   and can handle them.
+    *   Any new commands should be added here so the bot knows they exist.
      */
     public CommandManager() {
 
@@ -59,7 +58,7 @@ public class CommandManager {
         // Check if command already exists
         boolean nameFound = this.commands.stream().anyMatch((it) -> it.getName().equalsIgnoreCase(cmd.getName()));
 
-        // just checking for duplicate commands
+        // no duplicates
         if (nameFound){
             throw new IllegalArgumentException("A command with this name is already present");
 
@@ -75,7 +74,7 @@ public class CommandManager {
     }
 
     // Gets a command from the list
-    // We also check for any aliases the command may have
+    // We also check for any aliases
     @Nullable
     public ICommand getCommand(String search){
         String searchLower = search.toLowerCase();
@@ -103,7 +102,7 @@ public class CommandManager {
         String invoke = split[0].toLowerCase();
         ICommand cmd = getCommand(invoke);
 
-        // Now, we build a CommandContext from the command message, passing the arguments
+        // Now, we build a context from the command message with args
         if (cmd != null){
             event.getChannel().sendTyping().queue();
             List<String> args = Arrays.asList(split).subList(1, split.length);
