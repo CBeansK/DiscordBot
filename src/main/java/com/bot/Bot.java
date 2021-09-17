@@ -1,5 +1,6 @@
 package com.bot;
 
+import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 
@@ -12,12 +13,10 @@ public class Bot {
     // You can set the bot's current activity here
     private Bot() throws LoginException {
 
-        new JDABuilder()
-            .setToken(Config.get("token"))
+        JDABuilder.createDefault((Config.get("token")))
             .addEventListeners(new Listener())
             .setActivity(Activity.listening("silence"))
             .build();
-
     }
 
     public static void main(String[] args) throws LoginException {
