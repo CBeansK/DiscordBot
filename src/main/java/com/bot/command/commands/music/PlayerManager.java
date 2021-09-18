@@ -58,10 +58,13 @@ public class PlayerManager {
 
             // Build a search query
             StringBuilder trackUrlBuilder = new StringBuilder();
+
             trackUrlBuilder.append("ytsearch:").append(trackArgs.get(0));
+
             for (int i = 1; i < trackArgs.size(); i++){
                 trackUrlBuilder.append(trackArgs.get(i)).append(" ");
             }
+
             trackUrl = trackUrlBuilder.toString().trim();
         } else{
             trackUrl = trackArgs.get(0);

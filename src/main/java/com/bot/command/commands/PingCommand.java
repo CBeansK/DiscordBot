@@ -10,7 +10,7 @@ public class PingCommand implements ICommand {
 
         jda.getRestPing().queue(
                 (ping) -> ctx.getChannel()
-                .sendMessageFormat("Rest ping: %sms", ping).queue()
+                .sendMessageFormat("Pong! Latency: %sms", ping).queue()
         );
     }
 

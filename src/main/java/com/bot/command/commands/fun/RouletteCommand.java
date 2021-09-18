@@ -3,10 +3,7 @@ package com.bot.command.commands.fun;
 import com.bot.command.CommandContext;
 import com.bot.command.commands.ICommand;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.*;
 
 import java.util.List;
 import java.util.Timer;
@@ -16,8 +13,8 @@ import java.util.TimerTask;
 *   @class RouletteCommand
 *   Russian Roulette game with multiple levels of difficulty
 *   Easy: Loser is muted
-*   Medium: Loser is kicked from the guild
-*   Hard: Loser is BANNED from the guild
+*   Medium: Loser is kicked from the voice channel
+*   Hard: Loser is kicked from the server
 *
 *   Potential improvements:
 *   Balance
@@ -36,7 +33,7 @@ public class RouletteCommand implements ICommand {
 
         // Check arguments
         if (args.isEmpty()){
-            channel.sendMessage("Missing arguments").queue();
+            channel.sendMessage(getHelp()).queue();
             return;
         }
 
@@ -104,10 +101,10 @@ public class RouletteCommand implements ICommand {
                     guild.mute(author, true).queue();
                     break;
                 case "medium":
-                    guild.kick(author, "You lost!").queue();
+                    guild.moveVoiceMember(author, null).queue();
                     break;
                 case "hard":
-                    guild.ban(author, 1).queue();
+                    guild.kick(author, "You lost!").queue();
                     break;
             }
             return String.format("%s lost the roulette and has suffered the punishment!", author.getEffectiveName());
@@ -124,6 +121,6 @@ public class RouletteCommand implements ICommand {
     @Override
     public String getHelp() {
         return "Starts a roulette for a 'prize'\n" +
-                "Usage: `!!roulette [difficulty]`";
+                "Usage: ```!!roulette [difficulty]\n{ easy, medium, hard }```";
     }
 }

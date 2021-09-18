@@ -2,7 +2,6 @@ package com.bot.command;
 
 import com.bot.Config;
 import com.bot.command.commands.*;
-import com.bot.command.commands.fun.MoleCommand;
 import com.bot.command.commands.fun.RouletteCommand;
 import com.bot.command.commands.fun.TbowCommand;
 import com.bot.command.commands.music.*;
@@ -38,7 +37,6 @@ public class CommandManager {
 
         // Games
         addCommand(new RouletteCommand());
-        addCommand(new MoleCommand());
         addCommand(new TbowCommand());
 
         // VC Controls

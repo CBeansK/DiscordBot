@@ -10,6 +10,10 @@ public class ResumeCommand implements ICommand {
         PlayerManager manager = PlayerManager.getInstance();
         TextChannel channel = ctx.getChannel();
 
+        if (!ctx.getSelfMember().getVoiceState().inVoiceChannel()) {
+            channel.sendMessage("I'm not in a channel.").queue();
+            return;
+        }
         if (!manager.getGuildMusicManager(ctx.getGuild()).player.isPaused()) {
             channel.sendMessage("I am already playing music.").queue();
             return;
@@ -27,6 +31,6 @@ public class ResumeCommand implements ICommand {
 
     @Override
     public String getHelp() {
-        return null;
+        return "Resumes music if the player has been paused.";
     }
 }
