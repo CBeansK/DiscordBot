@@ -1,15 +1,20 @@
 package com.bot.command.util;
 
+import com.bot.Listener;
 import com.bot.command.CommandContext;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Utilities {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Utilities.class);
+
     public static void tempMute(Guild guild, TextChannel channel, Member target, int time){
         Timer timer = new Timer();
         // Get amount of time
@@ -36,6 +41,10 @@ public class Utilities {
 
                 if (counter.get(target) == 2){
                     this.cancel();
+                }
+
+                if (target.getVoiceState().isMuted()){
+                    LOGGER.error("Could not unmute target.");
                 }
             }
         };

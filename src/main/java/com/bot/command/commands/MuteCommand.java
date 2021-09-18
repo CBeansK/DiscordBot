@@ -62,13 +62,13 @@ public class MuteCommand implements ICommand {
 
         // default time
         int time = 60;
-        try {
-            time = Integer.parseInt(args.get(1));
-        } catch (NumberFormatException e){
-            channel.sendMessage("Please enter a valid amount of time").queue();
-            return;
+        if (!args.get(1).isEmpty()){
+            try {
+                time = Integer.parseInt(args.get(1));
+            } catch (NumberFormatException e){
+                channel.sendMessage("Please enter a valid amount of time").queue();
+            }
         }
-
         Utilities.tempMute(guild, channel, target, time);
     }
 

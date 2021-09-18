@@ -2,6 +2,7 @@ package com.bot;
 
 import com.bot.command.CommandManager;
 import com.bot.command.commands.game.XPManager;
+import com.bot.util.UserManager;
 import me.duncte123.botcommons.BotCommons;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -27,6 +28,7 @@ public class Listener extends ListenerAdapter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
     private final CommandManager manager = new CommandManager();
+    private final UserManager userManager = new UserManager();
     private final XPManager xpSystem = new XPManager(1);
     private final HashMap<Member, OffsetDateTime> pastCommands = new HashMap<>();
 
@@ -84,6 +86,10 @@ public class Listener extends ListenerAdapter {
                         .compareTo(pastCommands.get(event.getMember())) < 0){
                     return;
                 }
+            }
+
+            if (!userManager.knowsUser(event.getAuthor().getIdLong())){
+                UserManager.loadUserData(event.getAuthor().getIdLong());
             }
             pastCommands.put(event.getMember(), event.getMessage().getTimeCreated());
             manager.handle(event);

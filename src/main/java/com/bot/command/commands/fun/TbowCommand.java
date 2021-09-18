@@ -2,6 +2,8 @@ package com.bot.command.commands.fun;
 
 import com.bot.command.CommandContext;
 import com.bot.command.commands.ICommand;
+import com.bot.util.UserData;
+import com.bot.util.UserManager;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 
@@ -25,14 +27,17 @@ public class TbowCommand implements ICommand {
         final User author = ctx.getAuthor();
         final List<String> args = ctx.getArgs();
         final TextChannel channel = ctx.getChannel();
+        UserData data = UserManager.getUser(author.getIdLong());
 
         if (!args.isEmpty()){
             switch (args.get(0)){
                 case "attempts":
-                    channel.sendMessage("Tbow attempts: " + tbowAttempts.getOrDefault(author, 0)).queue();
+                    int attempts = data.getTbowAttempts();
+                    channel.sendMessage("Tbow attempts: " + attempts).queue();
                     break;
-                case "got":
-                    channel.sendMessage("Tbows gotten: " + tbowsReceived.getOrDefault(author, 0)).queue();
+                case "attained":
+                    int attained = data.getTbowsAttained();
+                    channel.sendMessage("Tbows gotten: " + attained).queue();
                     break;
             }
             return;
@@ -43,23 +48,13 @@ public class TbowCommand implements ICommand {
 
         if (rand < 1){
             channel.sendMessage("You got tbow! Congratulations!").queue();
-            tbowsReceived.put(author, tbowAttempts.getOrDefault(author, 0) + 1);
-
+            data.setTbowsAttained(data.getTbowsAttained() + 1);
         }else{
             channel.sendMessage("You didn't get tbow, sucks to suck").queue();
         }
-        tbowAttempts.put(author, tbowAttempts.getOrDefault(author, 0) + 1);
+        data.setTbowAttempts(data.getTbowAttempts() + 1);
     }
 
-
-
-    public int getTbowAttempts(User user) {
-        return tbowAttempts.get(user);
-    }
-
-    public int getTbowsReceived(User user) {
-        return tbowsReceived.get(user);
-    }
 
     @Override
     public String getName() {
