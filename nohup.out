@@ -1,0 +1,21 @@
+Exception in thread "DisconnectableInputStream source reader" org.gradle.api.UncheckedIOException: java.io.IOException: Bad file descriptor
+	at org.gradle.internal.UncheckedException.throwAsUncheckedException(UncheckedException.java:61)
+	at org.gradle.internal.UncheckedException.throwAsUncheckedException(UncheckedException.java:41)
+	at org.gradle.util.DisconnectableInputStream$1.run(DisconnectableInputStream.java:127)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Caused by: java.io.IOException: Bad file descriptor
+	at java.base/java.io.FileInputStream.readBytes(Native Method)
+	at java.base/java.io.FileInputStream.read(FileInputStream.java:279)
+	at java.base/java.io.BufferedInputStream.read1(BufferedInputStream.java:290)
+	at java.base/java.io.BufferedInputStream.read(BufferedInputStream.java:351)
+	at org.gradle.util.DisconnectableInputStream$1.run(DisconnectableInputStream.java:98)
+	... 1 more
+> Task :compileJava
+> Task :processResources UP-TO-DATE
+> Task :classes
+
+> Task :run
+23:21:15.444 [1;36mmain                              [0;39m [31m          [0;39m [1;32mJDA            [0;39m [34mINFO  [0;39m Login Successful!
+23:21:15.706 [1;36mJDA MainWS-ReadThread             [0;39m [31m          [0;39m [1;32mWebSocketClient[0;39m [34mINFO  [0;39m Connected to WebSocket
+23:21:16.019 [1;36mJDA MainWS-ReadThread             [0;39m [31m          [0;39m [1;32mJDA            [0;39m [34mINFO  [0;39m Finished Loading!
+23:21:16.020 [1;36mJDA MainWS-ReadThread             [0;39m [31m          [0;39m [1;32mListener       [0;39m [34mINFO  [0;39m Watson#3280 is ready

@@ -1,6 +1,7 @@
 package com.bot.command.commands;
 
 import com.bot.command.CommandContext;
+import com.bot.command.util.Utilities;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -59,35 +60,16 @@ public class MuteCommand implements ICommand {
             return;
         }
 
-        // Get amount of time
+        // default time
         int time = 60;
-        try {
-            time = Integer.parseInt(args.get(1));
-        } catch (NumberFormatException e){
-            channel.sendMessage("Please enter a valid amount of time").queue();
-            return;
-        }
-
-        // Storing the amounts of time that people are muted
-        final HashMap<Member, Integer> counter = new HashMap<>();
-        counter.put(target, 0);
-
-        // Mute the target
-        channel.sendMessage(String.format("Muting %s for %d seconds", target.getNickname(), time)).queue();
-        guild.mute(target, true).queue();
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                counter.put(target, counter.get(target) + 1);
-                guild.mute(target, false).queue();
-
-                if (counter.get(target) == 2){
-                    this.cancel();
-                }
+        if (!args.get(1).isEmpty()){
+            try {
+                time = Integer.parseInt(args.get(1));
+            } catch (NumberFormatException e){
+                channel.sendMessage("Please enter a valid amount of time").queue();
             }
-        };
-        timer.schedule(task, 0, time * 1000);
-
+        }
+        Utilities.tempMute(guild, channel, target, time);
     }
 
     @Override

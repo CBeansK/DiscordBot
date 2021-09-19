@@ -2,12 +2,11 @@ package com.bot.command.commands.fun;
 
 import com.bot.command.CommandContext;
 import com.bot.command.commands.ICommand;
+import com.bot.command.util.Utilities;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
 
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 /*
 *   @class RouletteCommand
@@ -22,6 +21,8 @@ import java.util.TimerTask;
 *   multiple players at once in an elimination mode?
  */
 public class RouletteCommand implements ICommand {
+
+    private final HashSet<Member> currentlyPlaying = new HashSet<>();
     @Override
     public void handle(CommandContext ctx) {
         final List<String> args = ctx.getArgs();
@@ -41,14 +42,20 @@ public class RouletteCommand implements ICommand {
 
         // Check permissions
         if (!selfMember.hasPermission(Permission.KICK_MEMBERS) ||
-            !selfMember.hasPermission(Permission.BAN_MEMBERS) ||
+            !selfMember.hasPermission(Permission.VOICE_MOVE_OTHERS) ||
             !selfMember.hasPermission(Permission.MANAGE_CHANNEL)){
-                channel.sendMessage("Missing permissions").queue();
+                channel.sendMessage("Missing permissions. Please make sure I have an admin role").queue();
                 return;
+        }
+
+        if (currentlyPlaying.contains(authorAsMember)){
+            channel.sendMessage("You can only play one roulette at a time.").queue();
+            return;
         }
 
         // Send start message
         channel.sendMessage("Roulette starting! You have 10 seconds say your last goodbyes").queue();
+        currentlyPlaying.add(authorAsMember);
 
         // Start timer
         Timer timer = new Timer();
@@ -81,24 +88,24 @@ public class RouletteCommand implements ICommand {
                 return;
             }
 
-            this.channel.sendMessage(doRoulette(this.author, this.difficulty, this.guild)).queue();
+            this.channel.sendMessage(doRoulette(this.author, this.channel, this.difficulty, this.guild)).queue();
         }
     }
 
     // Handles the game logic i.e. the roll and difficulty, as well as punishment
-    private String doRoulette(Member author, String difficulty, Guild guild) {
+    private String doRoulette(Member author, TextChannel channel, String difficulty, Guild guild) {
 
         // Change this if you want roulette to be more less likely to succeed
         final int ODDS = 10;
 
         double roll = Math.floor(Math.random() * ODDS);
 
+        currentlyPlaying.remove(author);
         // Outcomes for each difficulty
         if (roll < 1){
             switch (difficulty){
                 case "easy":
-                    // TODO: add timed mute so people aren't muted forever
-                    guild.mute(author, true).queue();
+                    Utilities.tempMute(guild, channel, author, 60);
                     break;
                 case "medium":
                     guild.moveVoiceMember(author, null).queue();
@@ -121,6 +128,6 @@ public class RouletteCommand implements ICommand {
     @Override
     public String getHelp() {
         return "Starts a roulette for a 'prize'\n" +
-                "Usage: ```!!roulette [difficulty]\n{ easy, medium, hard }```";
+                "Usage: ```[prefix]roulette [difficulty]\n{ easy, medium, hard }```";
     }
 }

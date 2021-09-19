@@ -9,6 +9,11 @@ public class PlayCommand implements ICommand {
     public void handle(CommandContext ctx) {
         PlayerManager manager = PlayerManager.getInstance();
 
+        if (!ctx.getSelfMember().getVoiceState().inVoiceChannel()){
+            ctx.getChannel().sendMessage("Attempting to join channel...").queue();
+            new JoinCommand().handle(ctx);
+        }
+
         manager.loadAndPlay(ctx.getChannel(), ctx.getArgs());
 
         manager.getGuildMusicManager(ctx.getGuild()).player.setVolume(Integer.parseInt(Config.get("volume")));
